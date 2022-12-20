@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:landing_page/providers/menu_provider.dart';
+import 'package:landing_page/providers/page_provider.dart';
+import 'package:landing_page/ui/widgets/custom_menu_item.dart';
 
 //* Riverpod Hooks para utilizar useAnimationController
 class CustomAppMenu extends HookConsumerWidget {
@@ -15,6 +17,8 @@ class CustomAppMenu extends HookConsumerWidget {
     //**Constrollador de la animacion */
     late final controller =
         useAnimationController(duration: Duration(milliseconds: 200));
+
+    final navigation = ref.watch(controllerProvider);
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -29,36 +33,85 @@ class CustomAppMenu extends HookConsumerWidget {
             controller.reverse();
           }
         },
+        //*Contendor del Menu
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           width: 150,
-          height: 50,
+          height: menuValue.isOpen ? 308 : 50,
           color: Colors.black,
-          child: Row(
+          child: Column(
             children: [
-              AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                curve: Curves.easeInOut,
-                width: menuValue.isOpen ? 50 : 0,
-              ),
-              Text(
-                "Menu",
-                style: GoogleFonts.roboto(
-                  color: Colors.white,
-                  fontSize: 18,
+              _MenuTitle(menuValue: menuValue, controller: controller),
+              if (menuValue.isOpen) ...[
+                CustomMenuItem(
+                  text: "Home",
+                  delay: 0,
+                  onPressed: () => navigation.goTo(0),
                 ),
-              ),
-              Spacer(),
-
-              //*Icono Animado
-              AnimatedIcon(
-                icon: AnimatedIcons.menu_close,
-                progress: controller,
-                color: Colors.white,
-              ),
+                CustomMenuItem(
+                  text: "About",
+                  delay: 30,
+                  onPressed: () => navigation.goTo(1),
+                ),
+                CustomMenuItem(
+                    text: "Pricing",
+                    delay: 60,
+                    onPressed: () => navigation.goTo(2)),
+                CustomMenuItem(
+                    text: "Contact",
+                    delay: 90,
+                    onPressed: () => navigation.goTo(3)),
+                CustomMenuItem(
+                    text: "Location",
+                    delay: 120,
+                    onPressed: () => navigation.goTo(4)),
+              ]
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _MenuTitle extends StatelessWidget {
+  const _MenuTitle({
+    Key? key,
+    required this.menuValue,
+    required this.controller,
+  }) : super(key: key);
+
+  final MenuProvider menuValue;
+  final AnimationController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      height: 50,
+      child: Row(
+        children: [
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            curve: Curves.easeInOut,
+            width: menuValue.isOpen ? 43 : 0,
+          ),
+          Text(
+            "Menú",
+            style: GoogleFonts.roboto(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+          const Spacer(),
+
+          //*Icono Animado
+          AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: controller,
+            color: Colors.white,
+          ),
+        ],
       ),
     );
   }
