@@ -36,8 +36,11 @@ dependencies:
     sdk: flutter
   flutter_hooks: ^0.18.5+1
   flutter_riverpod: ^2.1.1
+  get_it: ^7.2.0
   google_fonts: ^3.0.1
   hooks_riverpod: ^2.1.1
+
+  universal_html: ^2.0.8
 
 dev_dependencies:
   flutter_lints: ^2.0.0

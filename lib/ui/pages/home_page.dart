@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,23 +45,25 @@ class HomePage extends StatelessWidget {
       );
 }
 
-class _HomeBody extends HookConsumerWidget {
+class _HomeBody extends StatelessWidget {
   const _HomeBody({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(controllerProvider);
-    return PageView(
-      controller: controller.scrollController,
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      children: [
-        HomeView(),
-        AboutView(),
-        PricingView(),
-        ContactView(),
-        LocationView(),
-      ],
+  Widget build(BuildContext context) {
+    return Consumer(
+      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        return PageView(
+          controller: ref.watch(controllerProvider).scrollController,
+          scrollDirection: Axis.vertical,
+          children: const [
+            HomeView(),
+            AboutView(),
+            PricingView(),
+            ContactView(),
+            LocationView(),
+          ],
+        );
+      },
     );
   }
 }

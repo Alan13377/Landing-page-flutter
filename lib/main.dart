@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:landing_page/providers/locator.dart';
 import 'package:landing_page/router/router.dart';
-import 'package:landing_page/ui/pages/home_page.dart';
+
 import 'package:landing_page/utils/scroll.dart';
 
 void main() {
+  setupLocator();
   Flurorouter.configureRoutes();
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class MyApp extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Landing Page',
       scrollBehavior: AppScrollBehavior(),

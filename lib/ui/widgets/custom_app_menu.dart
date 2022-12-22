@@ -44,27 +44,26 @@ class CustomAppMenu extends HookConsumerWidget {
               _MenuTitle(menuValue: menuValue, controller: controller),
               if (menuValue.isOpen) ...[
                 CustomMenuItem(
-                  text: "Home",
-                  delay: 0,
-                  onPressed: () => navigation.goTo(0),
-                ),
+                    delay: 0,
+                    text: 'Home',
+                    onPressed: () => navigation.goTo(0)),
                 CustomMenuItem(
-                  text: "About",
-                  delay: 30,
-                  onPressed: () => navigation.goTo(1),
-                ),
+                    delay: 30,
+                    text: 'About',
+                    onPressed: () => navigation.goTo(1)),
                 CustomMenuItem(
-                    text: "Pricing",
                     delay: 60,
+                    text: 'Pricing',
                     onPressed: () => navigation.goTo(2)),
                 CustomMenuItem(
-                    text: "Contact",
                     delay: 90,
+                    text: 'Contact',
                     onPressed: () => navigation.goTo(3)),
                 CustomMenuItem(
-                    text: "Location",
                     delay: 120,
+                    text: 'Location',
                     onPressed: () => navigation.goTo(4)),
+                SizedBox(height: 8)
               ]
             ],
           ),
